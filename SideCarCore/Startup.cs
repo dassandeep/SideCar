@@ -7,7 +7,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SideCarCore.KafkaRepository;
-using SideCarCore.MongoLogRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,11 +30,7 @@ namespace SideCarCore
             services.Configure<KafkaSettings>(Configuration.GetSection(nameof(KafkaSettings)));
             services.AddSingleton<IKafkaSettings>(sp => sp.GetRequiredService<IOptions<KafkaSettings>>().Value);
 
-            services.Configure<MongoDbSettings>(Configuration.GetSection("MongoDbSettings"));
-
-            services.AddSingleton<IMongoDbSettings>(serviceProvider =>
-                serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
-            services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
